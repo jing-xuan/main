@@ -59,6 +59,9 @@ public class Parser {
      */
     public static Command parse(String userInput, Farmio.Stage stage) throws FarmioException {
         userInput = userInput.toLowerCase().trim();
+        if (!userInput.equals("")) {
+            LOGGER.log(Level.INFO, userInput + " command entered");
+        }
         if (userInput.equals("quit game") || userInput.equals("exit")) {
             return new CommandGameQuit();
         }
@@ -96,7 +99,7 @@ public class Parser {
         case TASK_ADD:
             return parseTaskAdd(userInput);
         default:
-            LOGGER.log(Level.INFO, "Deteched invalid command at stage: "
+            LOGGER.log(Level.INFO, "Detected invalid command at stage: "
                     + stage.toString() + " command: " + userInput);
             throw new FarmioException("Invalid Command!");
         }
@@ -132,7 +135,7 @@ public class Parser {
         if (userInput.equals("reset")) {
             return new CommandLevelReset();
         }
-        LOGGER.log(Level.SEVERE, "Deteched invalid command for command: " + userInput);
+        LOGGER.log(Level.SEVERE, "Detected invalid command for command: " + userInput);
         throw new FarmioException("Invalid Command!");
     }
 
@@ -185,7 +188,7 @@ public class Parser {
         } else if (userInput.equals("")) {
             return new CommandTaskAddReset();
         }
-        LOGGER.log(Level.INFO, "Deteched invalid commandfor command: " + userInput);
+        LOGGER.log(Level.INFO, "Detected invalid command for command: " + userInput);
         throw new FarmioException("Invalid command!");
     }
 
@@ -202,7 +205,7 @@ public class Parser {
             int taskID = Integer.parseInt(matcher.group("index"));
             return new CommandTaskDelete(taskID);
         }
-        LOGGER.log(Level.INFO, "Deteched invalid command for command: " + userInput);
+        LOGGER.log(Level.INFO, "Detected invalid command for command: " + userInput);
         throw new FarmioException("Invalid argument.");
     }
 
@@ -218,7 +221,7 @@ public class Parser {
             int pageNumber = Integer.parseInt(matcher.group("index"));
             return new CommandLog(pageNumber);
         }
-        LOGGER.log(Level.INFO, "Deteched invalid command for command: " + userInput);
+        LOGGER.log(Level.INFO, "Detected invalid command for command: " + userInput);
         throw new FarmioException("Invalid Log Page \nPlease enter log PAGE_NUMBER.");
     }
 
@@ -256,13 +259,13 @@ public class Parser {
             throw new FarmioException("Invalid command format!");
         }
         if (!taskType.equals("do")) {
-            LOGGER.log(Level.INFO, "Deteched invalid task type for command: " + userInput);
+            LOGGER.log(Level.INFO, "Detected invalid task type for command: " + userInput);
             throw new FarmioException("Invalid task type!");
         }
         if (Action.isValidAction(userAction)) {
             return new DoTask(Condition.toCondition("true"), Action.toAction(userAction));
         } else {
-            LOGGER.log(Level.INFO, "Deteched invalid action for command: " + userInput);
+            LOGGER.log(Level.INFO, "Detected invalid action for command: " + userInput);
             throw new FarmioException("Invalid action!");
         }
     }
@@ -287,15 +290,15 @@ public class Parser {
             throw new FarmioException("Invalid command format!");
         }
         if (!taskType.equals("if")) {
-            LOGGER.log(Level.INFO, "Deteched invalid task type for command: " + userInput);
+            LOGGER.log(Level.INFO, "Detected invalid task type for command: " + userInput);
             throw new FarmioException("Invalid task type!");
         }
         if (!Condition.isValidCondition(condition)) {
-            LOGGER.log(Level.INFO, "Deteched invalid condition for command: " + userInput);
+            LOGGER.log(Level.INFO, "Detected invalid condition for command: " + userInput);
             throw new FarmioException("Invalid Condition!");
         }
         if (!Action.isValidAction(action)) {
-            LOGGER.log(Level.INFO, "Deteched invalid action for command: " + userInput);
+            LOGGER.log(Level.INFO, "Detected invalid action for command: " + userInput);
             throw new FarmioException("Invalid Action!");
         }
         return new IfTask(Condition.toCondition(condition), Action.toAction(action));
@@ -316,7 +319,7 @@ public class Parser {
             Task task = parseTask(matcher.group("cmd"));
             return new CommandTaskEdit(taskID, task);
         }
-        LOGGER.log(Level.SEVERE, "Deteched invalid command for command: " + userInput);
+        LOGGER.log(Level.SEVERE, "Detected invalid command for command: " + userInput);
         throw new FarmioException("Invalid Command");
     }
 
@@ -334,7 +337,7 @@ public class Parser {
             Task task = parseTask(matcher.group("task"));
             return new CommandTaskInsert(taskID, task);
         }
-        LOGGER.log(Level.SEVERE, "Deteched invalid command for command: " + userInput);
+        LOGGER.log(Level.SEVERE, "Detected invalid command for command: " + userInput);
         throw new FarmioException("Invalid Command");
     }
 }
