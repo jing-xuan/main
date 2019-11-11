@@ -211,7 +211,7 @@ public class Parser {
             return new CommandTaskDelete(taskID);
         }
         LOGGER.log(Level.INFO, "Detected invalid command for command: " + userInput);
-        throw new FarmioException("Invalid argument.");
+        throw new FarmioException("Invalid command!");
     }
 
     /**
@@ -232,6 +232,9 @@ public class Parser {
             return new CommandLog(pageNumber);
         }
         LOGGER.log(Level.INFO, "Detected invalid command for command: " + userInput);
+        if (userInput.trim().equals("log")) {
+            throw new FarmioException("Invalid command. Please enter log PAGE_NUMBER");
+        }
         try {
             if (!userInput.substring(0, userInput.indexOf(" ")).equals("log")) {
                 throw new FarmioException("Invalid command!");
