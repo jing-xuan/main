@@ -12,7 +12,7 @@ image::https://github.com/AY1920S1-CS2113T-F14-2/main/blob/master/docs/images/jo
 
 Role: Developer
 
-Responsibilites: -
+Responsibilites: Game Assets, Farmer and Places, Menu
 
 '''
 
@@ -22,7 +22,7 @@ image::https://github.com/AY1920S1-CS2113T-F14-2/main/blob/master/docs/images/tz
 
 Role: Developer
 
-Responsibilities: -
+Responsibilities: Frontend, Ui, Code Simulation, Action Execution
 
 '''
 
@@ -32,7 +32,7 @@ image::https://github.com/AY1920S1-CS2113T-F14-2/main/blob/master/docs/images/ji
 
 Role: Developer
 
-Responsibilites: -
+Responsibilites: Logic, Task, Condition, Action, Parser
 
 '''
 
@@ -42,7 +42,7 @@ image::https://github.com/AY1920S1-CS2113T-F14-2/main/blob/master/docs/images/no
 
 Role: Developer
 
-Responsibilites: -
+Responsibilites: Objectives, Feedback and Log
 
 '''
 
@@ -52,6 +52,6 @@ image::https://github.com/AY1920S1-CS2113T-F14-2/main/blob/master/docs/images/ex
 
 Role: Developer
 
-Responsibilites: -
+Responsibilites: Storage and Game State Logic
 
 '''
