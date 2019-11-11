@@ -225,7 +225,7 @@ public class Parser {
         if (matcher.find()) {
             int pageNumber = 0;
             try {
-                Integer.parseInt(matcher.group("index"));
+                pageNumber = Integer.parseInt(matcher.group("index"));
             } catch (NumberFormatException e) {
                 throw new FarmioException("Your number is too big!");
             }
