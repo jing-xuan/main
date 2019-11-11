@@ -5,7 +5,7 @@
 
 # Key Features
 - **Gamified Learning**  
-   Through the gameplay, students will be exposed to problems which can be solved using programming concepts such as “if-else” statements, “for” and “while” loops. 
+   Through the gameplay, students will be exposed to problems which can be solved using programming concepts such as if-statements
 
 - **Simulation of Code**  
    Students will be able to see their code in action! Through the game simulation, the students can better understand the logic of the code blocks they have created
