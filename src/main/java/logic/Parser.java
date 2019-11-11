@@ -327,7 +327,7 @@ public class Parser {
         if (matcher.find()) {
             int taskID = 0;
             try {
-                Integer.parseInt(matcher.group("index"));
+                taskID = Integer.parseInt(matcher.group("index"));
             } catch (NumberFormatException e) {
                 throw new FarmioException("Your number is too large");
             }
@@ -350,7 +350,7 @@ public class Parser {
         if (matcher.find()) {
             int taskID = 0;
             try {
-                Integer.parseInt(matcher.group("id"));
+                taskID = Integer.parseInt(matcher.group("id"));
             } catch (NumberFormatException e) {
                 throw new FarmioException("Your number is too large!");
             }
