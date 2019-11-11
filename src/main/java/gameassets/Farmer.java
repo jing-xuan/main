@@ -74,7 +74,7 @@ public class Farmer {
     private void isValidName(String loadName) throws FarmioException {
         boolean hasError = false;
         if (loadName.equals("MENU") || !(loadName.length() <= 15 && loadName.length() > 0
-                && (loadName.matches("[a-zA-Z0-9]+") || loadName.contains("_")))) {
+                && (loadName.matches("[a-zA-Z0-9_]+")))) {
             hasError = true;
         }
 

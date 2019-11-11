@@ -96,7 +96,7 @@ public abstract class Condition {
      * @param userInput String that contains description for the ValueCondition
      * @return ValueCondition object described from the String
      */
-    private static ValueCondition toValueCondition(String userInput) {
+    private static ValueCondition toValueCondition(String userInput) throws FarmioException {
         ValueConditionType valueConditionType = ValueConditionType.gold;
         Comparator comparator = Comparator.lessThan;
         String conditionType = userInput.substring(0, userInput.indexOf(" "));
@@ -114,7 +114,11 @@ public abstract class Condition {
         }
         int value = 0;
         String val = userInput.substring(userInput.lastIndexOf(" ") + 1);
-        value = Integer.parseInt(val);
+        try {
+            value = Integer.parseInt(val);
+        } catch (NumberFormatException e) {
+            throw new FarmioException("Invalid number/Your number is too long!");
+        }
         return new ValueCondition(valueConditionType, comparator, value);
     }
 
