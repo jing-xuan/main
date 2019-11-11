@@ -202,7 +202,12 @@ public class Parser {
     private static Command parseTaskDelete(String userInput) throws FarmioException {
         Matcher matcher = Pattern.compile("^delete\\s+(?<index>\\d+)$").matcher(userInput);
         if (matcher.find()) {
-            int taskID = Integer.parseInt(matcher.group("index"));
+            int taskID = 0;
+            try {
+                taskID = Integer.parseInt(matcher.group("index"));
+            } catch (NumberFormatException e) {
+                throw new FarmioException("Your number is too large!");
+            }
             return new CommandTaskDelete(taskID);
         }
         LOGGER.log(Level.INFO, "Detected invalid command for command: " + userInput);
@@ -218,7 +223,12 @@ public class Parser {
     private static Command parseTaskLog(String userInput) throws FarmioException {
         Matcher matcher = Pattern.compile("^log\\s+(?<index>\\d+)$").matcher(userInput);
         if (matcher.find()) {
-            int pageNumber = Integer.parseInt(matcher.group("index"));
+            int pageNumber = 0;
+            try {
+                Integer.parseInt(matcher.group("index"));
+            } catch (NumberFormatException e) {
+                throw new FarmioException("Your number is too big!");
+            }
             return new CommandLog(pageNumber);
         }
         LOGGER.log(Level.INFO, "Detected invalid command for command: " + userInput);
@@ -315,7 +325,12 @@ public class Parser {
     private static Command parseTaskEdit(String userInput) throws FarmioException {
         Matcher matcher = Pattern.compile("^(?<key>edit)\\s+(?<index>-?\\d+)\\s(?<cmd>.+)$").matcher(userInput);
         if (matcher.find()) {
-            int taskID = Integer.parseInt(matcher.group("index"));
+            int taskID = 0;
+            try {
+                Integer.parseInt(matcher.group("index"));
+            } catch (NumberFormatException e) {
+                throw new FarmioException("Your number is too large");
+            }
             Task task = parseTask(matcher.group("cmd"));
             return new CommandTaskEdit(taskID, task);
         }
@@ -333,7 +348,12 @@ public class Parser {
     private static Command parseTaskInsert(String userInput) throws FarmioException {
         Matcher matcher = Pattern.compile("^(?<key>insert)\\s+(?<id>-?\\d+)\\s+(?<task>.+)$").matcher(userInput);
         if (matcher.find()) {
-            int taskID = Integer.parseInt(matcher.group("id"));
+            int taskID = 0;
+            try {
+                Integer.parseInt(matcher.group("id"));
+            } catch (NumberFormatException e) {
+                throw new FarmioException("Your number is too large!");
+            }
             Task task = parseTask(matcher.group("task"));
             return new CommandTaskInsert(taskID, task);
         }
