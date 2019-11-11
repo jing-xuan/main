@@ -178,7 +178,7 @@ public class Parser {
         if (userInput.equals("market")) {
             return new CommandShowList("MarketList");
         }
-        if (userInput.equals("task logic.commands") || userInput.equals("task command")) {
+        if (userInput.equals("task commands") || userInput.equals("task command")) {
             return new CommandShowList("TaskCommands");
         }
         if (userInput.startsWith("do") || userInput.startsWith("if")) {
