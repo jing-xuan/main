@@ -22,8 +22,6 @@ public class LevelTest {
             + "[{\"condition\":{\"condition_type\":\"BOOLEAN\",\"condition_boolean_type\":\"TRUE\"},\"action\""
             + ":\"gotoMarket\",\"type\":\"DO\"}],\"day\":903}";
 
-
-
     private static final String LEVEL_JSON = "{\"narratives\": [\"Hi there Farmer +, you only have enough gold to"
             + " start a small farm. Why not we head over to the market to get started.\",\"Take note that you cannot"
             + " enter any game commands during the narratives. If you wish to enter any commands, press [skip].\",\""
@@ -47,8 +45,9 @@ public class LevelTest {
             + "to create a task that tells Farmer + to drive to the market.\",\"modelAnswer\": \"|do gotoMarket|\"}";
 
     JSONParser parser = new JSONParser();
-    JSONObject jsonLevel = (JSONObject) parser.parse(LEVEL_JSON);
     JSONObject jsonFarmer = (JSONObject) parser.parse(FARMER_JSON);
+    JSONObject jsonLevel = (JSONObject) parser.parse(LEVEL_JSON);
+    Farmio farmio = new Farmio(false);
 
     private ArrayList<String> narratives;
     private String filePath;
@@ -62,6 +61,10 @@ public class LevelTest {
     private int deadline;
     public String modelAnswer;
     public List<String> successfulFeedback;
+
+    private boolean detailedFeedbackProvided = true;
+    private boolean incompleteObjectives = false;
+
     public Level level;
 
     /**
@@ -71,9 +74,10 @@ public class LevelTest {
      */
     public LevelTest() throws ParseException, FarmioException {
 
-        Level level = new Level(jsonLevel, "tester");
         Farmer farmer = new Farmer().setJson(jsonFarmer);
         Farmio farmio = new Farmio(false);
+
+        level = new Level(jsonLevel, farmer.getName());
 
         narratives = level.getNarratives();
         filePath = level.getPath();
@@ -100,7 +104,6 @@ public class LevelTest {
         } catch (Exception e) {
             assert false;
         }
-
         try {
             int currentDayNotExceeded = 1;
             boolean deadlineNotExceeded = level.checkDeadlineExceeded(currentDayNotExceeded);
@@ -108,26 +111,17 @@ public class LevelTest {
         } catch (Exception e) {
             assert false;
         }
-
-
     }
 
     @Test
     public void getSuccessfulFeedbackTest() {
-        try {
-            List<String> succesfulFeedback = level.getSuccessfulFeedback();
-            List<String> testFeedback = new ArrayList<>();
-            testFeedback.add("You have succesfully travelled to the market");
-            testFeedback.add(" by using the [do] command.");
-            testFeedback.add("Note that your goal changed from white to green when it is completed ");
-            testFeedback.add("(ubuntu only)");
+        List<String> succesfulFeedback = level.getSuccessfulFeedback();
+        List<String> testFeedback = new ArrayList<>();
+        testFeedback.add("You have succesfully travelled to the market by using the [do] command.");
+        testFeedback.add("Note that your goal changed from white to green when it is completed (ubuntu only)");
 
-            for (int i = 0; i < testFeedback.size(); i++) {
-                assertEquals(succesfulFeedback.get(i), testFeedback.get(i));
-            }
-
-        } catch (Exception e) {
-            assert false;
+        for (int i = 0; i < testFeedback.size(); i++) {
+            assertEquals(succesfulFeedback.get(i), testFeedback.get(i));
         }
     }
 
@@ -135,7 +129,7 @@ public class LevelTest {
     public void convertStringtoListTest() {
         try {
             String modelAns = modelAnswer;
-            List<String> expected = Arrays.asList("do buySeeds", "do gotoMarket");
+            List<String> expected = Arrays.asList("do gotoMarket");
             List<String> testList = level.convertStringToList(modelAns);
             for (int i = 0; i < expected.size(); i++) {
                 assertEquals(expected.get(i), testList.get(i));
@@ -158,6 +152,17 @@ public class LevelTest {
             List<String> compareList = new ArrayList<>();
             compareList.add("do buySeeds");
             compareList.add("do gotoMarket");
+
+            for (int i = 0; i < compareList.size(); i++) {
+                assertEquals(testTaskList.get(i), compareList.get(i));
+            }
+        } catch (Exception e) {
+            assert false;
+        }
+        try {
+            List<String> taskList = new ArrayList<>();
+            List<String> testTaskList = level.convertTaskListFormat(taskList);
+            List<String> compareList = new ArrayList<>();
 
             for (int i = 0; i < compareList.size(); i++) {
                 assertEquals(testTaskList.get(i), compareList.get(i));
@@ -220,7 +225,7 @@ public class LevelTest {
             assertEquals(checkEmpty, 100);
 
         } catch (Exception e) {
-            assert false;
+            assert true;
         }
     }
 }
